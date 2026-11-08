@@ -29,14 +29,11 @@ jobs:
           context: src
           platforms: linux/amd64
           push: true
-          tags: |
-            ghcr.io/bobxyo/toonflow-app:2.0.10-base
-            ghcr.io/bobxyo/toonflow-app:latest
+          tags: ghcr.io/bobxyo/toonflow-app:2.0.10-base
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
   patch:
-    needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
@@ -56,7 +53,9 @@ jobs:
           file: Dockerfile.patch
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/bobxyo/toonflow-app:2.0.10-r1
+          tags: |
+            ghcr.io/bobxyo/toonflow-app:2.0.10-r1
+            ghcr.io/bobxyo/toonflow-app:latest
 
   smoke:
     needs: patch
