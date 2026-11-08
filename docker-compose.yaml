@@ -1,0 +1,9 @@
+services:
+  toonflow:
+    image: ghcr.io/bobxyo/toonflow-app:2.0.10
+    init: true
+    restart: unless-stopped
+    ports:
+      - "18630:3000"
+    volumes:
+      - ./data:/app/data
