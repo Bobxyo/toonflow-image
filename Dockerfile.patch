@@ -1,6 +1,11 @@
-# 上游镜像里 /app/build/tools/pluginDeveloper.tool.js 权限为 600 root，
-# 容器以 bun 用户启动时读取失败直接崩溃，这里补一层修正。
+# 1) 上游镜像里 /app/build/tools/pluginDeveloper.tool.js 权限为 600 root，
+#    容器以 bun 用户启动时读取失败直接崩溃（EACCES）→ 补权限。
+# 2) 局域网 http（非 secure context）下 crypto.randomUUID 不存在，前端报
+#    "启动失败 crypto.randomUUID is not a function" → 注入 polyfill。
 FROM ghcr.io/bobxyo/toonflow-app:2.0.10
 USER root
 RUN chmod -R a+rX /app/build && chown -R bun:bun /app/data
+COPY web-polyfill.js /app/build/web/zz-polyfill.js
+RUN sed -i 's#<script type="module"#<script src="/zz-polyfill.js"></script><script type="module"#' /app/build/web/index.html \
+ && grep -c zz-polyfill /app/build/web/index.html
 USER bun

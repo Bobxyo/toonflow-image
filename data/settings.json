@@ -1,3 +1,15 @@
 {
-	"mediaGenerationDisabledOnce": true
+	"mediaGenerationDisabledOnce": true,
+	"settings": {
+		"multiTenantEnabled": false,
+		"privacy": {
+			"dataCollectionEnabled": true,
+			"anonymousId": "657da87e-4b4d-4247-a92d-06699d6acfd8"
+		},
+		"customProviders": [],
+		"mediaProviderConfigs": {},
+		"toonflowProvider": null,
+		"helloCompleted": true,
+		"desktopUpdateSource": "github"
+	}
 }

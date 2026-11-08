@@ -54,7 +54,7 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/bobxyo/toonflow-app:2.0.10-r1
+            ghcr.io/bobxyo/toonflow-app:2.0.10-r2
             ghcr.io/bobxyo/toonflow-app:latest
 
   smoke:
@@ -72,7 +72,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Run and probe
         run: |
-          docker run -d --name tf -p 18630:3000 ghcr.io/bobxyo/toonflow-app:2.0.10-r1
+          docker run -d --name tf -p 18630:3000 ghcr.io/bobxyo/toonflow-app:2.0.10-r2
           code=000
           for i in $(seq 1 40); do
             code=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18630/ || true)
