@@ -1,6 +1,7 @@
 services:
   toonflow:
     image: ghcr.io/bobxyo/toonflow-app:2.0.10-r1
+    platform: linux/amd64
     init: true
     restart: unless-stopped
     ports:
