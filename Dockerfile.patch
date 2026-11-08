@@ -1,0 +1,6 @@
+# 上游镜像里 /app/build/tools/pluginDeveloper.tool.js 权限为 600 root，
+# 容器以 bun 用户启动时读取失败直接崩溃，这里补一层修正。
+FROM ghcr.io/bobxyo/toonflow-app:2.0.10
+USER root
+RUN chmod -R a+rX /app/build && chown -R bun:bun /app/data
+USER bun
