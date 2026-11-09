@@ -1,10 +1,11 @@
 services:
   toonflow:
-    image: ghcr.io/bobxyo/toonflow-app:2.0.10-r2
+    image: ghcr.io/bobxyo/toonflow-app:2.0.10-r3
     platform: linux/amd64
     init: true
     restart: unless-stopped
     ports:
       - "18630:3000"
+      - "43123:43123"
     volumes:
       - ./data:/app/data

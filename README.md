@@ -4,10 +4,11 @@
 
 ## 镜像
 
-- `ghcr.io/bobxyo/toonflow-app:2.0.10-r1` ← 用这个
-- `:2.0.10-base` 上游 Dockerfile 原样构建；`:2.0.10-r2` = base + 权限补丁 + randomUUID polyfill 层
+- `ghcr.io/bobxyo/toonflow-app:2.0.10-r3` ← 用这个
+- `:2.0.10-base` 上游 Dockerfile 原样构建；`:2.0.10-r3` = base + r2 补丁 + mobileLink 403 补丁
 - 补丁 1：上游 `/app/build/tools/pluginDeveloper.tool.js` 是 `600 root`，bun 用户启动读取失败直接崩（EACCES），补齐 `a+rX`
 - 补丁 2：局域网 `http://IP:18630` 不是 secure context，`crypto.randomUUID` 未定义 → 前端报 `启动失败 crypto.randomUUID is not a function`，注入 `web-polyfill.js` 到 `build/web/`
+- 补丁 3：设置页"设备互联"永远 403。`assertMobileLinkControl` 要求 `req.socket.remoteAddress` 是 127.0.0.1 且 Host 是 localhost，Docker 端口映射后来源是网桥 IP、Host 是局域网 IP，两项恒假。`Dockerfile.patch` 用 sed 去掉这两项校验（Origin 同源 + `x-toonflow-mobile-link: 1` 请求头校验保留）
 - 仅 `linux/amd64`
 
 ## 跑起来
